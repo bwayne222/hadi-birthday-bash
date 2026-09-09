@@ -1,4 +1,10 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+function useMounted() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted;
+}
 
 const COLORS = ["var(--gold)", "var(--pink)", "var(--cyan)", "oklch(0.8 0.18 140)"];
 
@@ -17,6 +23,9 @@ export function Confetti({ count = 90 }: { count?: number }) {
       })),
     [count],
   );
+
+  const mounted = useMounted();
+  if (!mounted) return null;
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
@@ -54,6 +63,9 @@ export function Balloons() {
       })),
     [],
   );
+
+  const mounted = useMounted();
+  if (!mounted) return null;
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
